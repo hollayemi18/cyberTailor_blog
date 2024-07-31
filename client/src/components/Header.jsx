@@ -117,40 +117,35 @@ export default function Header() {
       </div>
       {currentUser ? (
         <Navbar.Collapse>
-          <Navbar.Link active={path === 'mylearning'} as={'div'}>
-            <Link to='/mylearning'>
+          <Navbar.Link active={path === 'ai'} as={'div'}>
+            <Link to='/ai'>
+              {' '}
+              <span className='flex my-4 '>Tailors AI</span>
+            </Link>
+          </Navbar.Link>
+          <Navbar.Link active={path === 'social'} as={'div'}>
+            <Link to='/social'>
               {' '}
               <span className='flex my-4 '>Content</span>
             </Link>
           </Navbar.Link>
-          <Navbar.Link active={path === ''} as={'div'}>
-            <Link to=''>
-              {' '}
-              <span className='flex my-4 '>Tailors corner</span>
-            </Link>
-          </Navbar.Link>
-          <Navbar.Link active={path === ''} as={'div'}>
-            <Link to=''>
+
+          <Navbar.Link active={path === 'About'} as={'div'}>
+            <Link to='/about'>
               {' '}
               <span className='flex my-4 '>About</span>
-            </Link>
-          </Navbar.Link>
-          <Navbar.Link active={path === ''} as={'div'}>
-            <Link to=''>
-              {' '}
-              <span className='flex my-4 '>Badges and Certificate</span>
             </Link>
           </Navbar.Link>
         </Navbar.Collapse>
       ) : (
         <Navbar.Collapse>
-          <Navbar.Link active={path === '/projects'} as={'div'}>
-            <Link to='/projects'>
+          <Navbar.Link active={path === '/ai'} as={'div'}>
+            <Link to='/ai'>
               <span className='flex my-4 '>Tailor's Corner</span>
             </Link>
           </Navbar.Link>
-          <Navbar.Link active={path === '/'} as={'div'}>
-            <Link to=''>
+          <Navbar.Link active={path === '/social'} as={'div'}>
+            <Link to='/social'>
               {' '}
               <span className='flex my-4 '>Content</span>
             </Link>

@@ -15,10 +15,9 @@ const postSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    image: {
-      type: String,
-      default: '',
-    },
+    images: [{ type: String }],
+    videos: [{ type: String }],
+
     category: {
       type: String,
       default: 'uncategorized',

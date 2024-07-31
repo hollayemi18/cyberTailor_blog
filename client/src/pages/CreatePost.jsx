@@ -103,9 +103,9 @@ export default function CreatePost() {
             }
           >
             <option value='uncategorized'>Select a category</option>
-            <option value='javascript'>JavaScript</option>
-            <option value='reactjs'>React.js</option>
-            <option value='nextjs'>Next.js</option>
+            <option value='Female'>Female</option>
+            <option value='Male'>Male</option>
+            <option value='Children'>children</option>
           </Select>
         </div>
         <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3'>
@@ -114,34 +114,8 @@ export default function CreatePost() {
             accept='image/*'
             onChange={(e) => setFile(e.target.files[0])}
           />
-          <Button
-            type='button'
-            gradientDuoTone='purpleToBlue'
-            size='sm'
-            outline
-            onClick={handleUpdloadImage}
-            disabled={imageUploadProgress}
-          >
-            {imageUploadProgress ? (
-              <div className='w-16 h-16'>
-                <CircularProgressbar
-                  value={imageUploadProgress}
-                  text={`${imageUploadProgress || 0}%`}
-                />
-              </div>
-            ) : (
-              'Upload Image'
-            )}
-          </Button>
         </div>
-        {imageUploadError && <Alert color='failure'>{imageUploadError}</Alert>}
-        {formData.image && (
-          <img
-            src={formData.image}
-            alt='upload'
-            className='w-full h-72 object-cover'
-          />
-        )}
+
         <ReactQuill
           theme='snow'
           placeholder='Write something...'
@@ -151,6 +125,12 @@ export default function CreatePost() {
             setFormData({ ...formData, content: value });
           }}
         />
+        <FileInput
+          type='file'
+          accept='image/*'
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+
         <Button type='submit' gradientDuoTone='purpleToPink'>
           Publish
         </Button>

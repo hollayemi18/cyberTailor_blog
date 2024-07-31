@@ -1,6 +1,31 @@
 import Post from '../models/post.model.js';
 import { errorHandler } from '../utils/error.js';
+import multer from 'multer';
+import cloudinary from '../utils/cloudinary.js';
+import fs from 'fs';
+const upload = multer({ dest: 'uploads/' });
 
+export const fileUpload =
+  (upload.array('files'),
+  async (req, res) => {
+    const files = req.files;
+    const urls = [];
+
+    try {
+      for (const file of files) {
+        const filePath = path.join('uploads', file.filename);
+        const result = await cloudinary.uploader.upload(filePath, {
+          folder: 'blog_media',
+          resource_type: file.mimetype.startsWith('video/') ? 'video' : 'image',
+        });
+        urls.push(result.secure_url);
+        fs.unlinkSync(filePath); // Remove the file from local storage after uploading
+      }
+      res.status(200).json({ message: 'Files uploaded successfully', urls });
+    } catch (error) {
+      res.status(500).json({ message: 'File upload failed', error });
+    }
+  });
 export const create = async (req, res, next) => {
   if (!req.user.isAdmin) {
     return next(errorHandler(403, 'You are not allowed to create a post'));
@@ -29,7 +54,7 @@ export const create = async (req, res, next) => {
 export const getposts = async (req, res, next) => {
   try {
     const startIndex = parseInt(req.query.startIndex) || 0;
-    const limit = parseInt(req.query.limit) || 9;
+    const limit = parseInt(req.query.limit) || 10;
     const sortDirection = req.query.order === 'asc' ? 1 : -1;
     const posts = await Post.find({
       ...(req.query.userId && { userId: req.query.userId }),
@@ -95,7 +120,8 @@ export const updatepost = async (req, res, next) => {
           title: req.body.title,
           content: req.body.content,
           category: req.body.category,
-          image: req.body.image,
+          images: req.body.images,
+          videos: req.body.videos,
         },
       },
       { new: true }

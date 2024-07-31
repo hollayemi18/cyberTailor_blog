@@ -7,9 +7,12 @@ import postRoutes from './routes/post.route.js';
 import commentRoutes from './routes/comment.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import multer from 'multer';
+import cloudinary from './utils/cloudinary.js';
+import BlogPost from './models/post.model.js';
+import fs from 'fs';
 
 dotenv.config();
-
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
@@ -29,7 +32,6 @@ app.use(cookieParser());
 app.listen(3000, () => {
   console.log('Server is running on port 3000!');
 });
-
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
